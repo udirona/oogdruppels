@@ -1,0 +1,14 @@
+{
+  name: "foo",
+  ingredients: [
+    {
+      name: "kk",
+      preservative: ""
+    },
+    {
+      name: "kk"
+      preservative: ""
+    },
+    }
+  ]
+}
