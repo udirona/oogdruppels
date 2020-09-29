@@ -1,11 +1,97 @@
-<html>
-   <body>
-      
-      <form action = "http://localhost:8080/process_get" method = "GET">
-         First Name: <input type = "text" name = "first_name">  <br>
-         Last Name: <input type = "text" name = "last_name">
-         <input type = "submit" value = "Submit">
-      </form>
-      
-   </body>
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Oogdruppels Tracker</title>
+  <link rel="stylesheet" href="./ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="./jquery.min.js"></script>
+  <script src="./ui/1.12.1/jquery-ui.js"></script>
+
+  <style>
+    body{
+      background: #EEEEEE;
+      font-family: "Trebuchet MS", sans-serif;
+      margin: 50px;
+    }
+
+    fieldset {
+      border: 0;
+    }
+    label {
+      display: block;
+      margin: 30px 0 0 0;
+    }
+    .overflow {
+      height: 200px;
+    }
+  </style>
+
+  <script>
+  $( function() {
+    $( "#datepicker" ).datepicker();
+    $( "#oogdruppels" ).selectmenu();
+    $( ".widget input[type=submit], .widget a, .widget button" ).button();
+    $( "button, input, a" ).click( function( event ) {
+      alert( $("#oogdruppels").val() );
+    } );
+  } );
+
+  </script>
+</head>
+<body>
+ 
+<h1>Oogdruppels Tracker</h1>
+  
+<div>
+   <nav class="navbar navbar-inverse navbar-static-top">
+     <div class="container">
+      <a class="navbar-brand" href="/">Express HTML</a>
+          <ul class="nav navbar-nav">
+            <li class="active">
+              <a href="/">Home</a>
+            </li>
+            <li>
+              <a href="/about">About</a>
+            </li>
+            <li>
+              <a href="/sitemap">Sitemap</a>
+            </li>
+          </ul>
+     </div>
+  </nav>
+   
+  <div class="demo">
+
+  <!--   
+        <form action = "http://localhost:8080/process_get" method = "GET">
+      tart_auto_complete)vent.preventDefault();
+           First Name: <input type = "text" name = "first_name">  <br>
+           Last Name: <input type = "text" name = "last_name">
+           <input type = "submit" value = "Submit">
+        </form>
+  -->
+  <h2>Tracking</h2>
+    <form action="#">
+      <fieldset>
+        <!--
+        <label for="datepicker">Datum</label> 
+        <input type="text" id="datepicker">
+        -->
+
+        <label for="oogdruppels">Augentropfen</label>
+        <select name="oogdruppels" id="oogdruppels">
+          <option>Slower</option>
+          <option>Slow</option>
+          <option selected="selected">Medium</option>
+          <option>Fast</option>
+          <option>Faster</option>
+        </select>
+        <input class="ui-button ui-widget ui-corner-all" type="submit" value="Speichern">
+      </fieldset>
+    </form>
+
+  </div>
+</div>
+</body>
 </html>
