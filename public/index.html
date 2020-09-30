@@ -1,41 +1,54 @@
 <!doctype html>
-<html lang="de">
+<html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Oogdruppels Tracker</title>
+  <link rel="stylesheet" href="./style.css">
   <link rel="stylesheet" href="./ui/1.12.1/themes/base/jquery-ui.css">
   <script src="./jquery.min.js"></script>
   <script src="./ui/1.12.1/jquery-ui.js"></script>
 
-  <style>
-    body{
-      background: #EEEEEE;
-      font-family: "Trebuchet MS", sans-serif;
-      margin: 50px;
-    }
-
-    fieldset {
-      border: 0;
-    }
-    label {
-      display: block;
-      margin: 30px 0 0 0;
-    }
-    .overflow {
-      height: 200px;
-    }
-  </style>
-
   <script>
-  $( function() {
-    $( "#datepicker" ).datepicker();
-    $( "#oogdruppels" ).selectmenu();
-    $( ".widget input[type=submit], .widget a, .widget button" ).button();
-    $( "button, input, a" ).click( function( event ) {
-      alert( $("#oogdruppels").val() );
+    $( function() {
+      $( "#datepicker" ).datepicker();
+      $( "#radio-1" ).checkboxradio();
+      $( "#radio-2" ).checkboxradio();
+      $( "#radio-3" ).checkboxradio();
+      $( "#oogdruppels" ).selectmenu();
+      $( ".widget input[type=submit], .widget a, .widget button" ).button().click( 
+        function( event ) {
+          //alert( $("#oogdruppels").val() );
+          newElement()
+        } );
     } );
-  } );
+
+    // Create a new list item when clicking on the "Add" button
+    function newElement() {
+      var li = document.createElement("li");
+      var inputValue = document.getElementById("myInput").value;
+      var t = document.createTextNode(inputValue);
+      li.appendChild(t);
+      if (inputValue === '') {
+        alert("You must write something!");
+      } else {
+        document.getElementById("myUL").appendChild(li);
+      }
+      document.getElementById("myInput").value = "";
+
+      var span = document.createElement("SPAN");
+      var txt = document.createTextNode("\u00D7");
+      span.className = "close";
+      span.appendChild(txt);
+      li.appendChild(span);
+
+      for (i = 0; i < close.length; i++) {
+        close[i].onclick = function () {
+          var div = this.parentElement;
+          div.style.display = "none";
+        }
+      }
+    }
 
   </script>
 </head>
@@ -46,13 +59,13 @@
 <div>
    <nav class="navbar navbar-inverse navbar-static-top">
      <div class="container">
-      <a class="navbar-brand" href="/">Express HTML</a>
+      <a class="navbar-brand" href="/">Menu</a>
           <ul class="nav navbar-nav">
             <li class="active">
               <a href="/">Home</a>
             </li>
             <li>
-              <a href="/about">About</a>
+              <a href="https://jqueryui.com/">JQueryUI</a>
             </li>
             <li>
               <a href="/sitemap">Sitemap</a>
@@ -60,8 +73,7 @@
           </ul>
      </div>
   </nav>
-   
-  <div class="demo">
+</div>
 
   <!--   
         <form action = "http://localhost:8080/process_get" method = "GET">
@@ -71,14 +83,20 @@
            <input type = "submit" value = "Submit">
         </form>
   -->
-  <h2>Tracking</h2>
-    <form action="#">
-      <fieldset>
-        <!--
-        <label for="datepicker">Datum</label> 
-        <input type="text" id="datepicker">
-        -->
+<h2>Tracking</h2>
 
+    <div class="widget">
+      <fieldset>
+        <legend>Empfinden</legend>
+        <label for="radio-1">Gut</label>
+        <input type="radio" name="radio-1" id="radio-1">
+        <label for="radio-2">Ok</label>
+        <input type="radio" name="radio-1" id="radio-2">
+        <label for="radio-3">Meh</label>
+        <input type="radio" name="radio-1" id="radio-3">
+      </fieldset> 
+
+      <fieldset>
         <label for="oogdruppels">Augentropfen</label>
         <select name="oogdruppels" id="oogdruppels">
           <option>Slower</option>
@@ -87,11 +105,20 @@
           <option>Fast</option>
           <option>Faster</option>
         </select>
-        <input class="ui-button ui-widget ui-corner-all" type="submit" value="Speichern">
-      </fieldset>
-    </form>
 
-  </div>
-</div>
+      <input class="ui-button ui-widget ui-corner-all" type="submit" 
+         onclick="newElement()" value="Speichern">
+      </fieldset>
+    </div>
+
+<h2>Verlauf</h2>
+  <table class="table" id="history">
+    <tr><th>Datum</th><th>Augentropfen</th><th>Empfinden</th></tr>
+    <tr><td>01.01.200</td><td>some dorp</td><td>1</td></tr>
+    <tr><td>01.01.200</td><td>some dorp</td><td>1</td></tr>
+    <tr><td>01.01.200</td><td>some dorp</td><td>1</td></tr>
+    <tr><td>01.01.200</td><td>some dorp</td><td>1</td></tr>
+  </table>
+
 </body>
 </html>

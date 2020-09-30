@@ -1,0 +1,15 @@
+body{
+    background: #EEEEEE;
+    font-family: "Trebuchet MS", sans-serif;
+    margin: 50px;
+  }
+
+  fieldset {
+    border: 0;
+  }
+  label {
+    display: block;
+  }
+  .overflow {
+    height: 200px;
+  }
