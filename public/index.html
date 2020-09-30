@@ -5,14 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Oogdruppels Tracker</title>
   <link rel="stylesheet" href="./style.css">
-  <link rel="stylesheet" href="./ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="./ui/1.12.1/themes/base/jquery-ui.min.css">
   <script src="./jquery.min.js"></script>
   <script src="./ui/1.12.1/jquery-ui.js"></script>
+  <script type="text/javascript" src="db.json"></script>
+
 
   <script>
     $( function() {
+      var oggs = JSON.parse(oogdruppels);
+      for (i in oggs) {
+        $("#oogdruppels").append("<option>" +oggs[i].name+ "</option>" )
+      };
+
       $( "#datepicker" ).datepicker();
-      $( "input[type='radio']" ).checkboxradio("option", );
+      $( "input[type='radio']" ).checkboxradio();
       $( "#oogdruppels" ).selectmenu();
       $( "#submit" ).button().click( 
         function( event ) {
@@ -22,6 +29,9 @@
           let rating =  $( "input[type='radio']" ).val();
           $( "#history > tbody:last-child").append("<tr> <td>" +datetime+"</td> <td>" +ogg+ "</td> <td>" +rating+ "</td> </tr>");
         } );
+
+
+        
     } );
 
     //
@@ -74,11 +84,6 @@
       <fieldset>
         <label for="oogdruppels">Augentropfen</label>
         <select name="oogdruppels" id="oogdruppels">
-          <option>Slower</option>
-          <option>Slow</option>
-          <option selected="selected">Medium</option>
-          <option>Fast</option>
-          <option>Faster</option>
         </select>
 
       <input class="ui-button ui-widget ui-corner-all" type="submit" id="submit" value="Speichern">

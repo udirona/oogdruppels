@@ -1,6 +1,4 @@
-{
-  "oogdruppels":
-  [
+let oogdruppels = `[
     { "name": "HYLO DUAL INTENSE",
       "ingredients": [
         {"name": "Ectoin"},
@@ -12,9 +10,7 @@
     { "name": "Bepanthen Augentropfen"},
     { "name": "HYLO COMOD",
       "ingredients": [
-        { "name": "kk"},
         { "name": "kk"}
       ]
     }
-  ]
-}
+  ]`;
