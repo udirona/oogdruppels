@@ -17,6 +17,29 @@
         $("#oogdruppels").append("<option>" +oggs[i].name+ "</option>" )
       };
 
+      var db = openDatabase('oogdruppels', '1.0', 'Test DB', 2 * 1024 * 1024); 
+      var msg; 
+      db.transaction(function (tx) { 
+         tx.executeSql('CREATE TABLE IF NOT EXISTS History (date datetime, oogdruppel varchar(100), rating int)'); 
+        //  msg = '<p>Log message created and row inserted.</p>'; 
+        //  document.querySelector('#status').innerHTML = msg; 
+      });
+
+      db.transaction(function (tx) { 
+         tx.executeSql('SELECT * FROM History', [], function (tx, results) { 
+            var len = results.rows.length, i; 
+            msg = "<p>Found rows: " + len + "</p>"; 
+            document.querySelector('#status').innerHTML += msg; 
+      
+            for (i = 0; i < len; i++) { 
+              let ogg = results.rows.item(i).oogdruppel; 
+              let datetime = results.rows.item(i).date; 
+              let rating = results.rows.item(i).rating;
+              $( "#history > tbody:last-child").append("<tr> <td>" +datetime+"</td> <td>" +ogg+ "</td> <td>" +rating+ "</td> </tr>");
+            } 
+         }, null); 
+      }); 
+
       $( "#datepicker" ).datepicker();
       $( "input[type='radio']" ).checkboxradio();
       $( "#oogdruppels" ).selectmenu();
@@ -25,8 +48,11 @@
           // alert( $("#oogdruppels").val() );
           let ogg = $("#oogdruppels").val();
           let datetime = new Date().toLocaleString();
-          let rating =  $( "#radio-1" ).val();
+          let rating = 0;// $( "#radio-1" ).val();
           $( "#history > tbody:last-child").append("<tr> <td>" +datetime+"</td> <td>" +ogg+ "</td> <td>" +rating+ "</td> </tr>");
+          db.transaction( function(tx) {
+            tx.executeSql(`INSERT INTO History(date, oogdruppel, rating) VALUES ("${datetime}", "${ogg}", ${rating} )`);
+          });
         } );
 
     } );
@@ -91,6 +117,9 @@
   <table class="table" id="history">
     <tr><th>Datum</th><th>Augentropfen</th><th>Empfinden</th></tr>
   </table>
+
+<h3>System-Meldungen</h3>
+  <div id = "status" name = "status">Status Message</div> 
 
 </body>
 </html>
