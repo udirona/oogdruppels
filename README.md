@@ -3,10 +3,9 @@
 
 TODO:
 
-Anwendungsfälle
+Use Cases
  - Add Entry
-    Zeitstempel (auto)
-    Augentropfen
-    Grund (Selektion)
-
+      Reason
+ - Edit Entry
+ - Delete Entry
  
