@@ -10,7 +10,6 @@
   <script src="./ui/1.12.1/jquery-ui.js"></script>
   <script type="text/javascript" src="db.json"></script>
 
-
   <script>
     $( function() {
       var oggs = JSON.parse(oogdruppels);
@@ -26,12 +25,10 @@
           // alert( $("#oogdruppels").val() );
           let ogg = $("#oogdruppels").val();
           let datetime = new Date().toLocaleString();
-          let rating =  $( "input[type='radio']" ).val();
+          let rating =  $( "#radio-1" ).val();
           $( "#history > tbody:last-child").append("<tr> <td>" +datetime+"</td> <td>" +ogg+ "</td> <td>" +rating+ "</td> </tr>");
         } );
 
-
-        
     } );
 
     //
