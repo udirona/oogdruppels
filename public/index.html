@@ -12,44 +12,19 @@
   <script>
     $( function() {
       $( "#datepicker" ).datepicker();
-      $( "#radio-1" ).checkboxradio();
-      $( "#radio-2" ).checkboxradio();
-      $( "#radio-3" ).checkboxradio();
+      $( "input[type='radio']" ).checkboxradio("option", );
       $( "#oogdruppels" ).selectmenu();
-      $( ".widget input[type=submit], .widget a, .widget button" ).button().click( 
+      $( "#submit" ).button().click( 
         function( event ) {
-          //alert( $("#oogdruppels").val() );
-          newElement()
+          // alert( $("#oogdruppels").val() );
+          let ogg = $("#oogdruppels").val();
+          let datetime = new Date().toLocaleString();
+          let rating =  $( "input[type='radio']" ).val();
+          $( "#history > tbody:last-child").append("<tr> <td>" +datetime+"</td> <td>" +ogg+ "</td> <td>" +rating+ "</td> </tr>");
         } );
     } );
 
-    // Create a new list item when clicking on the "Add" button
-    function newElement() {
-      var li = document.createElement("li");
-      var inputValue = document.getElementById("myInput").value;
-      var t = document.createTextNode(inputValue);
-      li.appendChild(t);
-      if (inputValue === '') {
-        alert("You must write something!");
-      } else {
-        document.getElementById("myUL").appendChild(li);
-      }
-      document.getElementById("myInput").value = "";
-
-      var span = document.createElement("SPAN");
-      var txt = document.createTextNode("\u00D7");
-      span.className = "close";
-      span.appendChild(txt);
-      li.appendChild(span);
-
-      for (i = 0; i < close.length; i++) {
-        close[i].onclick = function () {
-          var div = this.parentElement;
-          div.style.display = "none";
-        }
-      }
-    }
-
+    //
   </script>
 </head>
 <body>
@@ -86,13 +61,13 @@
 <h2>Tracking</h2>
 
     <div class="widget">
-      <fieldset>
+      <fieldset id="rating">
         <legend>Empfinden</legend>
-        <label for="radio-1">Gut</label>
+        <label for="radio-1">Ok</label>
         <input type="radio" name="radio-1" id="radio-1">
-        <label for="radio-2">Ok</label>
+        <label for="radio-2">Meh</label>
         <input type="radio" name="radio-1" id="radio-2">
-        <label for="radio-3">Meh</label>
+        <label for="radio-3">Fuck</label>
         <input type="radio" name="radio-1" id="radio-3">
       </fieldset> 
 
@@ -106,18 +81,13 @@
           <option>Faster</option>
         </select>
 
-      <input class="ui-button ui-widget ui-corner-all" type="submit" 
-         onclick="newElement()" value="Speichern">
+      <input class="ui-button ui-widget ui-corner-all" type="submit" id="submit" value="Speichern">
       </fieldset>
     </div>
 
 <h2>Verlauf</h2>
   <table class="table" id="history">
     <tr><th>Datum</th><th>Augentropfen</th><th>Empfinden</th></tr>
-    <tr><td>01.01.200</td><td>some dorp</td><td>1</td></tr>
-    <tr><td>01.01.200</td><td>some dorp</td><td>1</td></tr>
-    <tr><td>01.01.200</td><td>some dorp</td><td>1</td></tr>
-    <tr><td>01.01.200</td><td>some dorp</td><td>1</td></tr>
   </table>
 
 </body>
