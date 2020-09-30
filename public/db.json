@@ -1,25 +1,19 @@
 {
+  "oogdruppels":
   [
-    { "name": "HYLO DUAL INTENSE"
+    { "name": "HYLO DUAL INTENSE",
       "ingredients": [
-        {"name": "Ectoin"}
-        {"name": "Natriumhyaluronat"}
+        {"name": "Ectoin"},
+        {"name": "Natriumhyaluronat"},
         {"name": "Borsäure"}
       ]
-   
-   
     }, 
-    { "name": "HYLO cOMOD",
+    { "name": "Evo Tears Omega"},
+    { "name": "Bepanthen Augentropfen"},
+    { "name": "HYLO COMOD",
       "ingredients": [
-        {
-          "name": "kk",
-          "preservative": ""
-        },
-
-        {
-          "name": "kk",
-          "preservative": ""
-        }
+        { "name": "kk"},
+        { "name": "kk"}
       ]
     }
   ]
