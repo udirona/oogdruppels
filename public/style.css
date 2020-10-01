@@ -14,6 +14,7 @@
 body {
     background: #E0F3F8;
     font-family: "Trebuchet MS", sans-serif;
+    /* font-family: Lucida Grande,Lucida Sans,Arial,sans-serif; */
     margin: 10px;
 }
 
@@ -49,5 +50,5 @@ table {
 }
 /*  Define the background color for all the EVEN background rows  */
 .table tr:nth-child(even){
-  background: #91BFDB;
+  background: #91BFDB;  
 }

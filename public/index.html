@@ -5,7 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Oogdruppels Tracker</title>
   <link rel="stylesheet" href="./style.css">
-  <link rel="stylesheet" href="./ui/1.12.1/themes/base/jquery-ui.min.css">
+  <!-- <link rel="stylesheet" href="./ui/1.12.1/themes/base/jquery-ui.min.css"> -->
+  <!-- <link rel="stylesheet" href="./ui/1.12.1/themes/cupertino/jquery-ui.css" rel="stylesheet"> -->
+  <!-- <link rel="stylesheet" href="./ui/1.12.1/themes/flick/jquery-ui.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="./ui/1.12.1/themes/redmond/jquery-ui.css" rel="stylesheet">
+  <!-- <link rel="stylesheet" href="./ui/1.12.1/themes/start/jquery-ui.css" rel="stylesheet"> -->
   <script src="./jquery.min.js"></script>
   <script src="./ui/1.12.1/jquery-ui.js"></script>
   <script type="text/javascript" src="db.json"></script>
@@ -21,6 +25,7 @@
       var msg; 
       db.transaction(function (tx) { 
          tx.executeSql('CREATE TABLE IF NOT EXISTS History (date datetime, oogdruppel varchar(100), rating int)'); 
+         tx.executeSql('ALTER TABLE History ADD COLUMN comment TEXT'); 
       });
 
       db.transaction(function (tx) { 
@@ -29,11 +34,14 @@
             msg = "<p>Found rows: " + len + "</p>"; 
             $('#status').innerHTML += msg; 
       
+            var j;
             for (i = 0; i < len; i++) { 
               let ogg = results.rows.item(i).oogdruppel; 
               let datetime = results.rows.item(i).date; 
               let rating = results.rows.item(i).rating;
               $( "#history > tbody:last-child").append("<tr> <td>" +datetime+"</td> <td>" +ogg+ "</td> <td>" +rating+ "</td> </tr>");
+              j = `<p>${datetime}; ${ogg}; ${rating} </p>`; 
+              $('#outdata').append(j); 
             } 
          }, null); 
       }); 
@@ -117,7 +125,8 @@
   </table>
 
 <h3>System-Meldungen</h3>
-  <div id = "status" name = "status">Status Message</div> 
+  <div id="status" name = "status">Status Message</div> 
+  <div id="outdata"></div> 
 
 </body>
 </html>

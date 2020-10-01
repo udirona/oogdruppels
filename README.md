@@ -9,3 +9,6 @@ Use Cases
  - Edit Entry
  - Delete Entry
  
+
+View 
+ - Group by Day
