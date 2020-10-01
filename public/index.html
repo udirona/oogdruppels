@@ -15,10 +15,22 @@
   <script type="text/javascript" src="db.json"></script>
 
   <script>
+    function getRating () {
+          let rating = 0;
+          if ($("input[name='rating']")[0].checked) {
+            rating = 1;
+          } else if ($("input[name='rating']")[1].checked) {
+            rating = 2;
+          } else { 
+            rating = 3
+          };
+          return rating;
+    };
+
     $( function() {
       var oggs = JSON.parse(oogdruppels);
       for (i in oggs) {
-        $('#oogdruppels').append("<option>" +oggs[i].name+ "</option>" )
+        $('#oogdruppels').append(`<option>${oggs[i].name}</option>`)
       };
 
       var db = openDatabase('oogdruppels', '1.0', 'Test DB', 2 * 1024 * 1024); 
@@ -46,15 +58,19 @@
          }, null); 
       }); 
 
-      $( "#datepicker" ).datepicker();
       $( "input[type='radio']" ).checkboxradio();
       $( "#oogdruppels" ).selectmenu();
+      $( "#test" ).button().click( 
+        function (event) {
+          alert(getRating());
+        }
+        );
       $( "#submit" ).button().click( 
         function( event ) {
           // alert( $("#oogdruppels").val() );
           let ogg = $("#oogdruppels").val();
           let datetime = new Date().toLocaleString();
-          let rating = 0;// $( "#radio-1" ).val();
+          rating = getRating();
           $( "#history > tbody:last-child").append("<tr> <td>" +datetime+"</td> <td>" +ogg+ "</td> <td>" +rating+ "</td> </tr>");
           db.transaction( function(tx) {
             tx.executeSql(`INSERT INTO History(date, oogdruppel, rating) VALUES ("${datetime}", "${ogg}", ${rating} )`);
@@ -102,21 +118,19 @@
     <div class="widget">
       <fieldset id="rating">
         <legend>Empfinden</legend>
-        <label for="radio-1">Ok</label>
-        <input type="radio" name="radio-1" id="radio-1">
-        <label for="radio-2">Meh</label>
-        <input type="radio" name="radio-1" id="radio-2">
-        <label for="radio-3">Fuck</label>
-        <input type="radio" name="radio-1" id="radio-3">
-      </fieldset> 
-
-      <fieldset>
+        <label for="rating-1">Ok</label>
+        <input type="radio" name="rating" id="rating-1" value="ok" checked="checked">
+        <label for="rating-2">Meh</label>
+        <input type="radio" name="rating" id="rating-2" value="meh">
+        <label for="rating-3">Fuck</label>
+        <input type="radio" name="rating" id="rating-3" value="fuck">
+        
         <label for="oogdruppels">Augentropfen</label>
         <select name="oogdruppels" id="oogdruppels">
         </select>
-
-      <button type="submit" id="submit">Speichern</button>
+        <button type="submit" id="submit">Speichern</button>
       </fieldset>
+        <button id="test">test</button>
     </div>
 
 <h2>Verlauf</h2>

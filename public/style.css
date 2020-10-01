@@ -24,7 +24,7 @@ fieldset {
 
 label {
   display: block;
-
+  margin-top: 0.5em;
 }
 .overflow {
   height: 200px;

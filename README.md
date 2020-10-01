@@ -12,3 +12,9 @@ Use Cases
 
 View 
  - Group by Day
+
+
+Arch:
+  - Server seitig speichern
+  - Auslagern SQL
+
