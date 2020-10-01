@@ -1,15 +1,53 @@
-body{
-    background: #EEEEEE;
-    font-family: "Trebuchet MS", sans-serif;
-    margin: 50px;
-  }
+/* http://colrd.com/create/palette/?id=18872
 
-  fieldset {
-    border: 0;
-  }
-  label {
-    display: block;
-  }
-  .overflow {
-    height: 200px;
-  }
+#D73027
+#FC8D59
+#FEE090
+#E0F3F8
+#91BFDB
+#91BFDB
+#4575B4
+
+ */
+
+
+body {
+    background: #E0F3F8;
+    font-family: "Trebuchet MS", sans-serif;
+    margin: 10px;
+}
+
+fieldset {
+  border: 0;
+}
+
+label {
+  display: block;
+
+}
+.overflow {
+  height: 200px;
+}
+
+table {
+  table-layout: fixed;
+}
+.table{
+  width:100%; 
+  border-collapse:collapse; 
+}
+.table td{ 
+  padding:7px; border:#4575B4 1px solid;
+}
+/* provide some minimal visual accomodation for IE8 and below */
+.table tr{
+  background: #E0F3F8;
+}
+/*  Define the background color for all the ODD background rows  */
+.table tr:nth-child(odd){ 
+  background: #E0F3F8;
+}
+/*  Define the background color for all the EVEN background rows  */
+.table tr:nth-child(even){
+  background: #91BFDB;
+}

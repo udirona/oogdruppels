@@ -14,22 +14,20 @@
     $( function() {
       var oggs = JSON.parse(oogdruppels);
       for (i in oggs) {
-        $("#oogdruppels").append("<option>" +oggs[i].name+ "</option>" )
+        $('#oogdruppels').append("<option>" +oggs[i].name+ "</option>" )
       };
 
       var db = openDatabase('oogdruppels', '1.0', 'Test DB', 2 * 1024 * 1024); 
       var msg; 
       db.transaction(function (tx) { 
          tx.executeSql('CREATE TABLE IF NOT EXISTS History (date datetime, oogdruppel varchar(100), rating int)'); 
-        //  msg = '<p>Log message created and row inserted.</p>'; 
-        //  document.querySelector('#status').innerHTML = msg; 
       });
 
       db.transaction(function (tx) { 
          tx.executeSql('SELECT * FROM History', [], function (tx, results) { 
             var len = results.rows.length, i; 
             msg = "<p>Found rows: " + len + "</p>"; 
-            document.querySelector('#status').innerHTML += msg; 
+            $('#status').innerHTML += msg; 
       
             for (i = 0; i < len; i++) { 
               let ogg = results.rows.item(i).oogdruppel; 
@@ -64,7 +62,7 @@
  
 <h1>Oogdruppels Tracker</h1>
   
-<div>
+<!-- <div>
    <nav class="navbar navbar-inverse navbar-static-top">
      <div class="container">
       <a class="navbar-brand" href="/">Menu</a>
@@ -81,7 +79,7 @@
           </ul>
      </div>
   </nav>
-</div>
+</div> -->
 
   <!--   
         <form action = "http://localhost:8080/process_get" method = "GET">
@@ -109,7 +107,7 @@
         <select name="oogdruppels" id="oogdruppels">
         </select>
 
-      <input class="ui-button ui-widget ui-corner-all" type="submit" id="submit" value="Speichern">
+      <button type="submit" id="submit">Speichern</button>
       </fieldset>
     </div>
 
