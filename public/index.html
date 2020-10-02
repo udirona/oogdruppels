@@ -13,18 +13,33 @@
   <script src="./jquery.min.js"></script>
   <script src="./ui/1.12.1/jquery-ui.js"></script>
   <script type="text/javascript" src="db.json"></script>
-
+<style>
+    /* Style the input */
+    input {
+      margin: 0;
+      border: none;
+      border-radius: 0;
+      width: 75%;
+      padding: 10px;
+      float: left;
+      font-size: 16px;
+    }
+</style>
   <script>
-    function getRating () {
-          let rating = 0;
-          if ($("input[name='rating']")[0].checked) {
-            rating = 1;
-          } else if ($("input[name='rating']")[1].checked) {
-            rating = 2;
-          } else { 
-            rating = 3
-          };
-          return rating;
+    function getRating() {
+      let rating = 0;
+      let radiogroup = $("input[name='rating']");
+      for (var i = 0; i < radiogroup.length; i++) {
+        if (radiogroup[i].checked) {
+          return radiogroup[i].value;
+        }
+      }
+    };
+
+    app = {};
+    function _addTableEntry(row, datetime, ogg, rating) {
+      //  $( "#history > tbody:last-child").append(`<tr><td>${datetime}</td> <td>${ogg}</td> <td>${rating}</td> </tr>`);
+      $( "#history > tbody:last-child").append(`<tr> <td>${row}</td> <td>${datetime}</td> <td>${ogg}</td> <td>${rating}</td> </tr>`);
     };
 
     $( function() {
@@ -36,24 +51,22 @@
       var db = openDatabase('oogdruppels', '1.0', 'Test DB', 2 * 1024 * 1024); 
       var msg; 
       db.transaction(function (tx) { 
-         tx.executeSql('CREATE TABLE IF NOT EXISTS History (date datetime, oogdruppel varchar(100), rating int)'); 
+         tx.executeSql('CREATE TABLE IF NOT EXISTS History (date datetime, oogdruppel TEXT, rating int)'); 
          tx.executeSql('ALTER TABLE History ADD COLUMN comment TEXT'); 
       });
 
       db.transaction(function (tx) { 
          tx.executeSql('SELECT * FROM History', [], function (tx, results) { 
-            var len = results.rows.length, i; 
+            var len = results.rows.length; 
             msg = "<p>Found rows: " + len + "</p>"; 
-            $('#status').innerHTML += msg; 
+            $("#status").innerHTML += msg; 
       
             var j;
-            for (i = 0; i < len; i++) { 
+            for (var i = 0; i < len; i++) { 
               let ogg = results.rows.item(i).oogdruppel; 
               let datetime = results.rows.item(i).date; 
               let rating = results.rows.item(i).rating;
-              $( "#history > tbody:last-child").append("<tr> <td>" +datetime+"</td> <td>" +ogg+ "</td> <td>" +rating+ "</td> </tr>");
-              j = `<p>${datetime}; ${ogg}; ${rating} </p>`; 
-              $('#outdata').append(j); 
+              _addTableEntry(i, datetime, ogg, rating);
             } 
          }, null); 
       }); 
@@ -63,23 +76,19 @@
       $( "#test" ).button().click( 
         function (event) {
           alert(getRating());
-        }
-        );
+        });
       $( "#submit" ).button().click( 
         function( event ) {
-          // alert( $("#oogdruppels").val() );
           let ogg = $("#oogdruppels").val();
-          let datetime = new Date().toLocaleString();
+          let datetime = new Date(); //.toLocaleString();
           rating = getRating();
-          $( "#history > tbody:last-child").append("<tr> <td>" +datetime+"</td> <td>" +ogg+ "</td> <td>" +rating+ "</td> </tr>");
+          _addTableEntry(0, datetime, ogg, rating);
           db.transaction( function(tx) {
-            tx.executeSql(`INSERT INTO History(date, oogdruppel, rating) VALUES ("${datetime}", "${ogg}", ${rating} )`);
+            let s = `INSERT INTO History(date, oogdruppel, rating) VALUES ("${datetime}", "${ogg}", "${rating}")`;
+            tx.executeSql(s);
           });
         } );
-
     } );
-
-    //
   </script>
 </head>
 <body>
@@ -126,16 +135,21 @@
         <input type="radio" name="rating" id="rating-3" value="fuck">
         
         <label for="oogdruppels">Augentropfen</label>
-        <select name="oogdruppels" id="oogdruppels">
-        </select>
+        <select name="oogdruppels" id="oogdruppels"></select>
+        <label for="myInput">Kommentar</label>
+        <input type="text" id="myInput" placeholder="Kommentar...">
+
         <button type="submit" id="submit">Speichern</button>
       </fieldset>
-        <button id="test">test</button>
+        <!-- <button id="test">test</button> -->
     </div>
 
 <h2>Verlauf</h2>
   <table class="table" id="history">
-    <tr><th>Datum</th><th>Augentropfen</th><th>Empfinden</th></tr>
+    <thead>
+      <tr><th>#</th><th>Datum</th><th>Augentropfen</th><th>Empfinden</th></tr>
+    </thead>
+    <tbody></tbody>
   </table>
 
 <h3>System-Meldungen</h3>
