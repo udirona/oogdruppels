@@ -36,7 +36,12 @@
       }
     };
 
-    app = {};
+    app = {
+      db: undefined,
+      test: function() {}
+
+
+    };
     function _addTableEntry(row, datetime, ogg, rating) {
       //  $( "#history > tbody:last-child").append(`<tr><td>${datetime}</td> <td>${ogg}</td> <td>${rating}</td> </tr>`);
       $( "#history > tbody:last-child").append(`<tr> <td>${row}</td> <td>${datetime}</td> <td>${ogg}</td> <td>${rating}</td> </tr>`);
@@ -77,17 +82,28 @@
         function (event) {
           alert(getRating());
         });
+
       $( "#submit" ).button().click( 
         function( event ) {
           let ogg = $("#oogdruppels").val();
-          let datetime = new Date(); //.toLocaleString();
+          let datetime = new Date().toLocaleString();
           rating = getRating();
           _addTableEntry(0, datetime, ogg, rating);
           db.transaction( function(tx) {
             let s = `INSERT INTO History(date, oogdruppel, rating) VALUES ("${datetime}", "${ogg}", "${rating}")`;
             tx.executeSql(s);
           });
-        } );
+        });
+      
+      $( "#deleteAll" ).button().click(
+        function(event ) {
+          db.transaction( function(tx) {
+            let s = `DELETE FROM History`;
+            tx.executeSql(s);
+          })
+        });
+
+      
     } );
   </script>
 </head>
@@ -138,9 +154,8 @@
         <select name="oogdruppels" id="oogdruppels"></select>
         <label for="myInput">Kommentar</label>
         <input type="text" id="myInput" placeholder="Kommentar...">
-
-        <button type="submit" id="submit">Speichern</button>
       </fieldset>
+        <button type="submit" id="submit">Speichern</button>
         <!-- <button id="test">test</button> -->
     </div>
 
@@ -155,6 +170,6 @@
 <h3>System-Meldungen</h3>
   <div id="status" name = "status">Status Message</div> 
   <div id="outdata"></div> 
-
+  <button type="submit" id="deleteAll">Alles Löschen</button>
 </body>
 </html>
